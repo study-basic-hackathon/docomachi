@@ -1,0 +1,3 @@
+- AWS Amplify Genを使用して開発する。フロントエンドはNext.js、バックエンドはサーバレス構成でAppsyncとDynamoDBを用いて、Lambda関数も含めて全てバックエンドはTypeScriptを使用する。
+- テストについてはjestを使用して、ミニマムのテストケースのみを用意する。lintとprettierはhuskyを使用して自動実行する。
+- GitHubのPR発行時には手動で認証するのでgh auth loginコマンドを実行して認証を待つこととする。
