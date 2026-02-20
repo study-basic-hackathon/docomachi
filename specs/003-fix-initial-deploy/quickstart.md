@@ -20,6 +20,11 @@
    - ビルド・デプロイが完了し、「Artifact directory doesn't exist」エラーが発生しないことを確認する。
    - アプリURLで引き続きアプリが表示されることを確認する。
 
+## プルリクエスト（T008 / Constitution IV）
+
+- ブランチ `003-fix-initial-deploy` は push 済みです。
+- PR を作成する: [Compare & pull request](https://github.com/study-basic-hackathon/docomachi/compare/003-fix-initial-deploy) から「Create pull request」を実行してください。
+
 ## ローカルでの事前確認
 
 - リポジトリルートで `cd frontend && npm run build` を実行し、`frontend/.next` が生成されることを確認する。

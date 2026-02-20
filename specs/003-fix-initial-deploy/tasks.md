@@ -75,7 +75,7 @@
 **Purpose**: ドキュメント整備と最終確認。Constitution IV に従い PR 作成までをタスクに含める。
 
 - [x] T007 Run full verification per quickstart: clone/install/build (local), then deploy via Amplify console and confirm SC-001, SC-002, SC-003 (no artifact error, app URL loads, re-deploy works)
-- [ ] T008 Create pull request for this feature branch (Constitution IV: タスクにはプルリクエストの作成までを含める)
+- [ ] T008 Create pull request for this feature branch (Constitution IV: タスクにはプルリクエストの作成までを含める) → ブランチは push 済み。手動で PR 作成: https://github.com/study-basic-hackathon/docomachi/compare/003-fix-initial-deploy
 
 ---
 
