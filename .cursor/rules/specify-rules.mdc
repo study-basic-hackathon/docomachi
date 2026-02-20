@@ -1,0 +1,33 @@
+# docomachi Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-02-17
+
+## Active Technologies
+- TypeScript 5.x（constitution および既存 frontend に合わせる） + AWS Amplify Gen2 (`amplify`), Next.js 14（既存 frontend）, Amazon Cognito（Amplify デフォルト認証）, DynamoDB（Amplify Data 経由） (002-amplify-backend-setup)
+- DynamoDB（docomachi テーブル、パーティションキーのみ UUID）。Amplify Gen2 の `defineData` でスキーマ定義。 (002-amplify-backend-setup)
+
+- TypeScript (Next.js App Router準拠) + Next.js (App Router), shadcn/ui, Reac (001-top-page)
+
+## Project Structure
+
+```text
+backend/
+frontend/
+tests/
+```
+
+## Commands
+
+npm test && npm run lint
+
+## Code Style
+
+TypeScript (Next.js App Router準拠): Follow standard conventions
+
+## Recent Changes
+- 002-amplify-backend-setup: Added TypeScript 5.x（constitution および既存 frontend に合わせる） + AWS Amplify Gen2 (`amplify`), Next.js 14（既存 frontend）, Amazon Cognito（Amplify デフォルト認証）, DynamoDB（Amplify Data 経由）
+
+- 001-top-page: Added TypeScript (Next.js App Router準拠) + Next.js (App Router), shadcn/ui, Reac
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->
