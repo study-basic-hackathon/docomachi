@@ -1,0 +1,2 @@
+- Next.jsのルートにトップページを配置する。Next.jsはApp Routerを採用する。
+- UIライブラリはshadcnを採用する。
