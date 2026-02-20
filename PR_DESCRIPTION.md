@@ -1,41 +1,41 @@
-# プルリクエスト説明文
+# AWS Amplify Gen2 バックエンドの構築
 
 ## 概要
 
-フロントエンドのトップページを実装しました。Next.js App Routerを使用し、麻雀をイメージさせる緑の背景、バナー画像、スタートボタンを配置しています。
+AWS Amplify Gen2 でバックエンドをコードとして定義しました。デフォルト認証（Amazon Cognito）を有効化し、DynamoDB に docomachi テーブル（パーティションキー UUID）を定義しています。
 
 ## 実装内容
 
-- Next.js App Routerを使用したトップページコンポーネント
-- shadcn/uiを使用したスタートボタン
-- Next.js Imageコンポーネントによるバナー画像の最適化表示
-- Tailwind CSSによるレスポンシブデザイン
-- Jest/React Testing Libraryによるテスト実装
+### バックエンド構造
 
-## 技術スタック
+- `amplify/auth/resource.ts`: デフォルト認証（メール/パスワード、Cognito）の定義
+- `amplify/data/resource.ts`: docomachi モデル（パーティションキー: id UUID）の定義
+- `amplify/backend.ts`: auth と data を統合するバックエンド定義
+- `amplify/package.json`: Amplify Gen2 の依存関係
+- `amplify/tsconfig.json`: TypeScript 設定
 
-- Next.js 14 (App Router)
-- React 18
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- Jest + React Testing Library
+### ドキュメント
 
-## 成功基準
+- `specs/002-amplify-backend-setup/`: 仕様、計画、タスク、データモデル、契約、quickstart ガイド
 
-- ✅ SC-001: ルートURLアクセスから3秒以内に主要要素表示
-- ✅ SC-002: スタートボタン1回操作で遷移
-- ✅ SC-003: 一般的な画面幅でレイアウト崩れなし
+## 検証
+
+- ✅ `cd amplify && npm install && npm run typecheck` が成功
+- ✅ デプロイは行わず、コードの実装のみ完了
+
+## 完了条件
+
+- ✅ コードの実装完了
+- ✅ ローカルでのビルド・検証が可能
+- ⏳ プルリクエストの作成（本 PR）
+
+## 注意事項
+
+- **デプロイは行いません**。マージ後の AWS コンソール上での設定（リソース作成・デプロイ・リージョン指定等）は依頼者側で実施してください。
+- リージョンはコードで指定していません。Amplify のデフォルト、またはマージ後に AWS コンソールで設定してください。
 
 ## 関連ドキュメント
 
-- 仕様書: `specs/001-top-page/spec.md`
-- 実装計画: `specs/001-top-page/plan.md`
-- タスクリスト: `specs/001-top-page/tasks.md`
-
-## チェックリスト
-
-- [x] すべてのタスクが完了している
-- [x] テストが実装されている
-- [x] コードがリント・フォーマットされている
-- [x] 成功基準を満たしている
+- 仕様: `specs/002-amplify-backend-setup/spec.md`
+- 計画: `specs/002-amplify-backend-setup/plan.md`
+- Quickstart: `specs/002-amplify-backend-setup/quickstart.md`

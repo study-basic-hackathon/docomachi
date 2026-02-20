@@ -92,7 +92,7 @@
 
 - [x] T010 [P] Update `specs/002-amplify-backend-setup/quickstart.md` if any steps changed during implementation (paths, commands)
 - [x] T011 Run quickstart.md validation: clone/install/build steps complete without deploy (FR-005, SC-001)
-- [ ] T012 Create pull request for branch 002-amplify-backend-setup per FR-006 and SC-005 (implementation complete, no post-merge console steps in scope)
+- [x] T012 Create pull request for branch 002-amplify-backend-setup per FR-006 and SC-005 (implementation complete, no post-merge console steps in scope)
 
 ---
 
