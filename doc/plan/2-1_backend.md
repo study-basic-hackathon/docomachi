@@ -1,0 +1,1 @@
+AWS Amplify Gen2, TypeScript, Amazon Cognito, Next.js, DynamoDB

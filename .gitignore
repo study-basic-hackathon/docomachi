@@ -43,9 +43,8 @@ Thumbs.db
 *.sln
 *.sw?
 
-# AWS Amplify
+# AWS Amplify (Gen2: amplify/ はバックエンドソースのため追跡する。.amplify/ のみ無視)
 .amplify/
-amplify/
 
 # Temporary files
 *.cache
