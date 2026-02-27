@@ -12,6 +12,13 @@ const schema = a.schema({
       id: a.id().required(),
     })
     .authorization((allow) => [allow.authenticated()]),
+  MahjongHand: a
+    .model({
+      id: a.id().required(),
+      tiles: a.string().array().required(),
+      winningTiles: a.string().array().required(),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

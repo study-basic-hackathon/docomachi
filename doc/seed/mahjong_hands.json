@@ -1,0 +1,12 @@
+[
+  {
+    "id": "kokushi-13-sided",
+    "tiles": ["1m", "9m", "1p", "9p", "1s", "9s", "ton", "nan", "sha", "pe", "haku", "hatsu", "chun"],
+    "winningTiles": ["1m", "9m", "1p", "9p", "1s", "9s", "ton", "nan", "sha", "pe", "haku", "hatsu", "chun"]
+  },
+  {
+    "id": "junsei-churen",
+    "tiles": ["1m", "1m", "1m", "2m", "3m", "4m", "5m", "6m", "7m", "8m", "9m", "9m", "9m"],
+    "winningTiles": ["1m", "2m", "3m", "4m", "5m", "6m", "7m", "8m", "9m"]
+  }
+]
