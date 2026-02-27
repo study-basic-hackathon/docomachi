@@ -1,0 +1,18 @@
+"""GraphQL contract for seeding initial Mahjong hands (admin/internal use)."""
+
+input SeedMahjongHandInput {
+  id: ID
+  tiles: [String!]!
+  winningTiles: [String!]!
+}
+
+type SeedMahjongHandsResult {
+  createdCount: Int!
+}
+
+type Mutation {
+  seedInitialMahjongHands(
+    hands: [SeedMahjongHandInput!]!
+  ): SeedMahjongHandsResult!
+}
+

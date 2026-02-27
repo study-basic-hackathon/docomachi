@@ -1,0 +1,14 @@
+"""GraphQL contract for getting a random Mahjong hand."""
+
+type MahjongHand {
+  id: ID!
+  tiles: [String!]!
+  winningTiles: [String!]!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Query {
+  getRandomMahjongHand: MahjongHand!
+}
+
