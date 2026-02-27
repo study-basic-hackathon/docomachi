@@ -8,7 +8,8 @@ import { a, defineData, type ClientSchema } from "@aws-amplify/backend";
 const schema = a.schema({
   Docomachi: a
     .model({
-      // パーティションキー: id は Amplify デフォルトで付与され UUID が自動生成される（data-model.md）
+      // パーティションキー: id。Amplify デフォルトの ID を明示的に定義する。
+      id: a.id().required(),
     })
     .authorization((allow) => [allow.authenticated()]),
 });
