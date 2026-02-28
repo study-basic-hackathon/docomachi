@@ -12,13 +12,14 @@ const schema = a.schema({
       id: a.id().required(),
     })
     .authorization((allow) => [allow.authenticated()]),
+  // MahjongHand: 認証ユーザーまたは API キー（未認証）で読み取り可能。認証は別タスクで強化予定。
   MahjongHand: a
     .model({
       id: a.id().required(),
       tiles: a.string().array().required(),
       winningTiles: a.string().array().required(),
     })
-    .authorization((allow) => [allow.authenticated()]),
+    .authorization((allow) => [allow.authenticated(), allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -27,5 +28,8 @@ export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "userPool",
+    apiKeyAuthorizationMode: {
+      expiresInDays: 365,
+    },
   },
 });
