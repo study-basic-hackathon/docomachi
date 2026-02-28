@@ -1,7 +1,21 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { Amplify } from "aws-amplify";
 import { mahjongClient } from "../src/lib/mahjong/client";
 import type { TileCode } from "../src/lib/mahjong/mahjongHand";
+
+async function configureAmplify(): Promise<void> {
+  const outputsPath = path.join(process.cwd(), "amplify_outputs.json");
+  try {
+    const raw = await fs.readFile(outputsPath, "utf8");
+    const outputs = JSON.parse(raw) as Record<string, unknown>;
+    Amplify.configure(outputs);
+  } catch {
+    throw new Error(
+      "amplify_outputs.json not found or invalid. Run 'npx ampx sandbox' first and ensure the file exists.",
+    );
+  }
+}
 
 type SeedHand = {
   id?: string;
@@ -51,11 +65,14 @@ export async function seedMahjongHands(): Promise<number> {
   for (const hand of hands) {
     validateSeedHand(hand);
 
-    await mahjongClient.models.MahjongHand.create({
-      id: hand.id,
-      tiles: hand.tiles as TileCode[],
-      winningTiles: hand.winningTiles as TileCode[],
-    });
+    await mahjongClient.models.MahjongHand.create(
+      {
+        id: hand.id,
+        tiles: hand.tiles as TileCode[],
+        winningTiles: hand.winningTiles as TileCode[],
+      },
+      { authMode: "apiKey" },
+    );
     created += 1;
   }
 
@@ -63,7 +80,8 @@ export async function seedMahjongHands(): Promise<number> {
 }
 
 if (require.main === module) {
-  seedMahjongHands()
+  Promise.all([configureAmplify()])
+    .then(() => seedMahjongHands())
     .then((count) => {
       // eslint-disable-next-line no-console
       console.log(`Seeded ${count} MahjongHand records`);

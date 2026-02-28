@@ -1,41 +1,51 @@
-# AWS Amplify Gen2 バックエンドの構築
+# 一問フロントエンド（麻雀手牌クイズ）
 
 ## 概要
 
-AWS Amplify Gen2 でバックエンドをコードとして定義しました。デフォルト認証（Amazon Cognito）を有効化し、DynamoDB に docomachi テーブル（パーティションキー UUID）を定義しています。
+トップページのスタートから出題画面へ遷移し、バックエンドから1問を取得して手牌を萬・索・筒・字の順で表示。待ち牌を複数選択して解答し、正解/不正解をモーダルで表示する機能を実装しました。
 
 ## 実装内容
 
-### バックエンド構造
+### フロントエンド
 
-- `amplify/auth/resource.ts`: デフォルト認証（メール/パスワード、Cognito）の定義
-- `amplify/data/resource.ts`: docomachi モデル（パーティションキー: id UUID）の定義
-- `amplify/backend.ts`: auth と data を統合するバックエンド定義
-- `amplify/package.json`: Amplify Gen2 の依存関係
-- `amplify/tsconfig.json`: TypeScript 設定
+- **app/page.tsx**: スタートボタンで `/quiz` へ遷移（バナー画像は一旦削除）
+- **app/quiz/page.tsx**: 出題取得（fetchQuestion）、loading/error/ready、手牌・解答ピッカー・解答する・結果モーダル・戻る
+- **components/TileImage.tsx**: 牌画像表示（`public/images/tiles/{code}.gif`）、欠損時は「読み込み失敗」
+- **components/HandDisplay.tsx**: 手牌を萬索筒字順で表示
+- **components/AnswerPicker.tsx**: 全種類の牌を複数選択、選択中の牌をテキスト表示（ref で複数選択の状態を保持）
+- **components/ResultModal.tsx**: 正解/不正解モーダル
+- **components/AmplifyProvider.tsx**: Amplify 設定（layout で使用）
 
-### ドキュメント
+### API・ロジック
 
-- `specs/002-amplify-backend-setup/`: 仕様、計画、タスク、データモデル、契約、quickstart ガイド
+- **src/lib/api/fetchQuestion.ts**: axios で AppSync `listMahjongHands` を呼び出し、1件をランダムで返す。未認証時は API キー（x-api-key）でリクエスト
+- **src/lib/mahjong/sortTilesForDisplay.ts**: 萬子→索子→筒子→字牌（東南西北白發中）の表示順でソート
+
+### バックエンド（本 PR で対応）
+
+- **amplify/data/resource.ts**: MahjongHand に `allow.publicApiKey()` を追加し、未認証でも list 取得可能に。`apiKeyAuthorizationMode: { expiresInDays: 365 }` を追加
+
+### シード
+
+- **scripts/seedMahjongHands.ts**: Amplify 設定と API キー認証で `doc/seed/mahjong_hands.json` を投入
+- **package.json**: `"seed": "tsx scripts/seedMahjongHands.ts"` を追加
+
+### 仕様・計画
+
+- **specs/001-simple-frontend/**: spec、plan、research、data-model、contracts、quickstart、tasks
 
 ## 検証
 
-- ✅ `cd amplify && npm install && npm run typecheck` が成功
-- ✅ デプロイは行わず、コードの実装のみ完了
+- ✅ `npm run build` 成功
+- ✅ サンドボックスで `npm run seed` により初期データ投入済み
+- ✅ トップ→スタート→出題画面→手牌・解答エリア表示・複数選択・解答する→正解/不正解モーダル→やり直し/戻る
 
 ## 完了条件
 
-- ✅ コードの実装完了
-- ✅ ローカルでのビルド・検証が可能
-- ⏳ プルリクエストの作成（本 PR）
+- ✅ T001–T016 完了（tasks.md 参照）
+- ⏳ T017: 本 PR 作成（日本語）
 
 ## 注意事項
 
-- **デプロイは行いません**。マージ後の AWS コンソール上での設定（リソース作成・デプロイ・リージョン指定等）は依頼者側で実施してください。
-- リージョンはコードで指定していません。Amplify のデフォルト、またはマージ後に AWS コンソールで設定してください。
-
-## 関連ドキュメント
-
-- 仕様: `specs/002-amplify-backend-setup/spec.md`
-- 計画: `specs/002-amplify-backend-setup/plan.md`
-- Quickstart: `specs/002-amplify-backend-setup/quickstart.md`
+- 認証は別タスクで実装予定。現状は未認証または API キーで出題取得可能
+- 牌画像は `public/images/tiles/{牌コード}.gif`（例: `ton.gif`）
