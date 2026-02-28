@@ -82,7 +82,7 @@
 **Purpose**: 動作確認と PR まで（憲法 IV）
 
 - [x] T016 Run quickstart.md: start sandbox, seed doc/seed data, npm run dev, manually verify トップ→スタート→出題→解答→正誤→やり直し/戻る and error リトライ/トップへ戻る
-- [ ] T017 Create pull request in Japanese (憲法 IV); ensure GITHUB_TOKEN from .env if using GitHub API
+- [x] T017 Create pull request in Japanese (憲法 IV); ensure GITHUB_TOKEN from .env if using GitHub API
 
 ---
 
