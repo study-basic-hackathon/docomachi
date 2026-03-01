@@ -79,6 +79,7 @@ export default function QuizPage() {
   }
 
   if (state === "ready" && view === "result") {
+    // FR-008: 各問は最大1回。初回正解=正解、それ以外=不正解。未回答(null)=不正解としてカウント
     const correctCount = answers.filter((a) => a === "correct").length;
     return (
       <div className="min-h-screen p-4 max-w-2xl mx-auto flex flex-col items-center justify-center gap-6">
@@ -151,6 +152,7 @@ export default function QuizPage() {
           open={modalOpen}
           isCorrect={modalCorrect}
           currentIndex={currentIndex}
+          winningTiles={question.winningTiles}
           onNextQuestion={() => {
             setModalOpen(false);
             setSelectedTiles([]);

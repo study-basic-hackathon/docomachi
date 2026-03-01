@@ -74,9 +74,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T010 [US3] Update `components/ResultModal.tsx` for incorrect: show "次の問題へ" (or "結果を見る" when currentIndex === 9), "解答を見る", and keep question on screen for retry; wire onNextQuestion / onSeeResults and onSeeAnswer (FR-005, FR-007)
-- [ ] T011 [US3] Add "解答を見る" behavior: when user clicks, open modal (or expand ResultModal) to display correct answer (winningTiles) e.g. via HandDisplay in `components/ResultModal.tsx` or dedicated modal (FR-006)
-- [ ] T012 [US3] Ensure scoring in `app/quiz/page.tsx`: each question counted at most once; first correct submission = correct, otherwise incorrect; unanswered (e.g. skipped) = incorrect when showing result (FR-008)
+- [x] T010 [US3] Update `components/ResultModal.tsx` for incorrect: show "次の問題へ" (or "結果を見る" when currentIndex === 9), "解答を見る", and keep question on screen for retry; wire onNextQuestion / onSeeResults and onSeeAnswer (FR-005, FR-007)
+- [x] T011 [US3] Add "解答を見る" behavior: when user clicks, open modal (or expand ResultModal) to display correct answer (winningTiles) e.g. via HandDisplay in `components/ResultModal.tsx` or dedicated modal (FR-006)
+- [x] T012 [US3] Ensure scoring in `app/quiz/page.tsx`: each question counted at most once; first correct submission = correct, otherwise incorrect; unanswered (e.g. skipped) = incorrect when showing result (FR-008)
 
 **Checkpoint**: User Story 3 complete — wrong answer: retry, see answer modal, skip to next; score correct
 
