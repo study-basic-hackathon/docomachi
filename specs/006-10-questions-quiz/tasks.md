@@ -58,9 +58,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T007 [US2] In `app/quiz/page.tsx` add `answers` state (AnswerState[] length 10), update on submit: first correct = correct, else incorrect; pass isCorrect and current question index to ResultModal
-- [ ] T008 [US2] Update `components/ResultModal.tsx`: after correct show only "次の問題へ" when currentIndex < 9 and only "結果を見る" when currentIndex === 9; add props onNextQuestion and onSeeResults, call appropriately (FR-003, FR-004)
-- [ ] T009 [US2] In `app/quiz/page.tsx` implement result view: when user clicks "結果を見る", show score as "X / 10" (count answers where status === 'correct'); optionally "トップへ戻る" link (FR-004)
+- [x] T007 [US2] In `app/quiz/page.tsx` add `answers` state (AnswerState[] length 10), update on submit: first correct = correct, else incorrect; pass isCorrect and current question index to ResultModal
+- [x] T008 [US2] Update `components/ResultModal.tsx`: after correct show only "次の問題へ" when currentIndex < 9 and only "結果を見る" when currentIndex === 9; add props onNextQuestion and onSeeResults, call appropriately (FR-003, FR-004)
+- [x] T009 [US2] In `app/quiz/page.tsx` implement result view: when user clicks "結果を見る", show score as "X / 10" (count answers where status === 'correct'); optionally "トップへ戻る" link (FR-004)
 
 **Checkpoint**: User Story 2 complete — correct path: Next question (1–9), See results (Q10), score display
 

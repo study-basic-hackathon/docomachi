@@ -10,6 +10,7 @@ import { ResultModal } from "@/components/ResultModal";
 import { Button } from "@/components/ui/button";
 
 type QuizState = "loading" | "error" | "ready";
+type AnswerState = "correct" | "incorrect";
 
 function isCorrectAnswer(selected: TileCode[], winning: TileCode[]): boolean {
   const a = new Set(selected);
@@ -23,10 +24,14 @@ export default function QuizPage() {
   const [state, setState] = useState<QuizState>("loading");
   const [questions, setQuestions] = useState<QuestionItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<(AnswerState | null)[]>(
+    () => Array(10).fill(null) as (AnswerState | null)[]
+  );
   const [selectedTiles, setSelectedTiles] = useState<TileCode[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalCorrect, setModalCorrect] = useState(false);
+  const [view, setView] = useState<"quiz" | "result">("quiz");
 
   const load = async () => {
     setState("loading");
@@ -35,7 +40,9 @@ export default function QuizPage() {
       const qs = await fetchQuestions();
       setQuestions(qs);
       setCurrentIndex(0);
+      setAnswers(Array(10).fill(null) as (AnswerState | null)[]);
       setSelectedTiles([]);
+      setView("quiz");
       setState("ready");
     } catch (e) {
       setState("error");
@@ -67,6 +74,21 @@ export default function QuizPage() {
             <Link href="/">トップへ戻る</Link>
           </Button>
         </div>
+      </div>
+    );
+  }
+
+  if (state === "ready" && view === "result") {
+    const correctCount = answers.filter((a) => a === "correct").length;
+    return (
+      <div className="min-h-screen p-4 max-w-2xl mx-auto flex flex-col items-center justify-center gap-6">
+        <h2 className="text-2xl font-bold">結果</h2>
+        <p className="text-4xl font-semibold text-green-600">
+          {correctCount} / 10
+        </p>
+        <Button asChild>
+          <Link href="/">トップへ戻る</Link>
+        </Button>
       </div>
     );
   }
@@ -110,6 +132,13 @@ export default function QuizPage() {
                 selectedTiles,
                 question.winningTiles
               );
+              setAnswers((prev) => {
+                const next = [...prev];
+                if (next[currentIndex] === null) {
+                  next[currentIndex] = correct ? "correct" : "incorrect";
+                }
+                return next;
+              });
               setModalCorrect(correct);
               setModalOpen(true);
             }}
@@ -121,6 +150,16 @@ export default function QuizPage() {
         <ResultModal
           open={modalOpen}
           isCorrect={modalCorrect}
+          currentIndex={currentIndex}
+          onNextQuestion={() => {
+            setModalOpen(false);
+            setSelectedTiles([]);
+            setCurrentIndex((i) => i + 1);
+          }}
+          onSeeResults={() => {
+            setModalOpen(false);
+            setView("result");
+          }}
           onClose={() => {
             setModalOpen(false);
             setSelectedTiles([]);

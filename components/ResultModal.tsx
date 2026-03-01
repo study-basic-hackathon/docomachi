@@ -5,11 +5,24 @@ import { Button } from "@/components/ui/button";
 interface ResultModalProps {
   open: boolean;
   isCorrect: boolean;
+  /** 0–9: 現在の問題番号（9 = 10問目） */
+  currentIndex: number;
+  onNextQuestion: () => void;
+  onSeeResults: () => void;
   onClose: () => void;
 }
 
-export function ResultModal({ open, isCorrect, onClose }: ResultModalProps) {
+export function ResultModal({
+  open,
+  isCorrect,
+  currentIndex,
+  onNextQuestion,
+  onSeeResults,
+  onClose,
+}: ResultModalProps) {
   if (!open) return null;
+
+  const isLastQuestion = currentIndex === 9;
 
   return (
     <div
@@ -25,9 +38,21 @@ export function ResultModal({ open, isCorrect, onClose }: ResultModalProps) {
         <p className="text-gray-600 mb-4">
           {isCorrect ? "正解です！" : "残念、不正解です。"}
         </p>
-        <Button onClick={onClose} className="w-full">
-          閉じる
-        </Button>
+        {isCorrect ? (
+          isLastQuestion ? (
+            <Button onClick={onSeeResults} className="w-full">
+              結果を見る
+            </Button>
+          ) : (
+            <Button onClick={onNextQuestion} className="w-full">
+              次の問題へ
+            </Button>
+          )
+        ) : (
+          <Button onClick={onClose} className="w-full">
+            閉じる
+          </Button>
+        )}
       </div>
     </div>
   );
