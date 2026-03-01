@@ -2,8 +2,10 @@
  * データリソース（docomachi テーブル）
  * 契約: specs/002-amplify-backend-setup/contracts/docomachi-schema.md
  * パーティションキーは id (UUID) のみ。他属性は後続のデータ要件で追加する。
+ * カスタムクエリ listRandomMahjongHands: specs/006-10-questions-quiz/contracts/quiz-10-questions-api.md
  */
 import { a, defineData, type ClientSchema } from "@aws-amplify/backend";
+import { listRandomMahjongHands } from "../functions/listRandomMahjongHands/resource.js";
 
 const schema = a.schema({
   Docomachi: a
@@ -20,6 +22,23 @@ const schema = a.schema({
       winningTiles: a.string().array().required(),
     })
     .authorization((allow) => [allow.authenticated(), allow.publicApiKey()]),
+  // ランダム10件取得（クイズ出題用）
+  ListRandomMahjongHandsItem: a.customType({
+    id: a.id(),
+    tiles: a.string().array(),
+    winningTiles: a.string().array(),
+    createdAt: a.string(),
+    updatedAt: a.string(),
+  }),
+  ListRandomMahjongHandsResponse: a.customType({
+    items: a.ref("ListRandomMahjongHandsItem").array(),
+  }),
+  listRandomMahjongHands: a
+    .query()
+    .arguments({ limit: a.integer().required() })
+    .returns(a.ref("ListRandomMahjongHandsResponse"))
+    .authorization((allow) => [allow.authenticated(), allow.publicApiKey()])
+    .handler(a.handler.function(listRandomMahjongHands)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
