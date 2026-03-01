@@ -1,18 +1,63 @@
+import { execSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { Amplify } from "aws-amplify";
 import { mahjongClient } from "../src/lib/mahjong/client";
 import type { TileCode } from "../src/lib/mahjong/mahjongHand";
 
+async function ensureProductionOutputs(outputsPath: string): Promise<void> {
+  const appId = process.env.AMPLIFY_APP_ID;
+  const branch = process.env.AMPLIFY_BRANCH ?? "main";
+  if (!appId) {
+    throw new Error(
+      `amplify_outputs.production.json not found. Either create it with: npx ampx generate outputs --branch <branch> --app-id <app-id> (then copy the generated amplify_outputs.json to amplify_outputs.production.json)\n  or set AMPLIFY_APP_ID (and optionally AMPLIFY_BRANCH, default main) and run again to generate it automatically.`,
+    );
+  }
+  // eslint-disable-next-line no-console
+  console.log(
+    `Generating amplify_outputs for branch=${branch}, app-id=${appId}...`,
+  );
+  execSync(
+    `npx ampx generate outputs --branch ${branch} --app-id ${appId}`,
+    { encoding: "utf8", maxBuffer: 1024 * 1024 },
+  );
+  // ampx は JSON を stdout に出さず、カレントディレクトリに amplify_outputs.json を書き込む
+  const defaultPath = path.join(process.cwd(), "amplify_outputs.json");
+  const raw = await fs.readFile(defaultPath, "utf8");
+  await fs.writeFile(outputsPath, raw, "utf8");
+}
+
 async function configureAmplify(): Promise<void> {
-  const outputsPath = path.join(process.cwd(), "amplify_outputs.json");
+  const outputsFileName =
+    process.env.AMPLIFY_OUTPUTS_PATH ?? "amplify_outputs.json";
+  const outputsPath = path.isAbsolute(outputsFileName)
+    ? outputsFileName
+    : path.join(process.cwd(), outputsFileName);
+
+  let raw: string;
   try {
-    const raw = await fs.readFile(outputsPath, "utf8");
+    raw = await fs.readFile(outputsPath, "utf8");
+  } catch {
+    if (outputsFileName.includes("production")) {
+      await ensureProductionOutputs(outputsPath);
+      raw = await fs.readFile(outputsPath, "utf8");
+    } else {
+      throw new Error(
+        `${outputsFileName} not found. Run 'npx ampx sandbox' first, or for production see doc/seed/README.md.`,
+      );
+    }
+  }
+
+  try {
     const outputs = JSON.parse(raw) as Record<string, unknown>;
     Amplify.configure(outputs);
   } catch {
+    const hint =
+      outputsFileName.includes("production") && raw.includes("File written")
+        ? " (ampx は JSON を stdout に出さないため、リダイレクト > ではメッセージだけ保存されます。代わりに: npx ampx generate outputs --branch <branch> --app-id <id> を実行し、生成された amplify_outputs.json を amplify_outputs.production.json にコピーしてください)"
+        : "";
     throw new Error(
-      "amplify_outputs.json not found or invalid. Run 'npx ampx sandbox' first and ensure the file exists.",
+      `${outputsFileName} is invalid JSON. Re-generate with: npx ampx generate outputs --branch <branch> --app-id <id>, then copy the generated amplify_outputs.json to ${outputsFileName}.${hint}`,
     );
   }
 }
