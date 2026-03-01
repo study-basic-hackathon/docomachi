@@ -1,13 +1,14 @@
 <!--
 Sync Impact Report:
-Version change: 1.0.1 → 1.1.0 (MINOR: プロジェクト目的の明文化、原則 III・IV 追加)
-Modified principles: N/A
-Added sections: Purpose（プロジェクト目的）、III. タスク開始手順、IV. タスク範囲と PR/トークン
-Removed sections: N/A
+Version change: 1.1.0 → 1.2.0 (MINOR: 原則 IV に「PR は日本語で作成」を明文化)
+Modified principles: IV. タスク範囲と PR / トークン（PR 言語の規定を追加）
+Added sections: None
+Removed sections: None
 Templates requiring updates:
   ✅ plan-template.md - Constitution Check は原則ベースのまま整合
   ✅ spec-template.md - 変更不要（汎用テンプレート）
   ✅ tasks-template.md - 変更不要（汎用テンプレート）
+  N/A commands/*.md - ディレクトリなし
 Follow-up TODOs: None
 -->
 
@@ -39,9 +40,9 @@ Follow-up TODOs: None
 
 ### IV. タスク範囲と PR / トークン
 
-タスクにはプルリクエストの作成までを含める。GitHub のトークンは .env の GITHUB_TOKEN を使用する。
+タスクにはプルリクエストの作成までを含める。プルリクエストは日本語で作成する。GitHub のトークンは .env の GITHUB_TOKEN を使用する。
 
-**Rationale**: タスク完了の定義を「PR 作成まで」に統一し、レビュー・マージまでの一連の流れを担保する。トークンは .env で一元管理し、リポジトリにコミットしない。
+**Rationale**: タスク完了の定義を「PR 作成まで」に統一し、レビュー・マージまでの一連の流れを担保する。PR を日本語で統一することでチーム内のコミュニケーションとレビュー効率を保つ。トークンは .env で一元管理し、リポジトリにコミットしない。
 
 ## Development Workflow
 
@@ -55,6 +56,7 @@ Follow-up TODOs: None
 
 - タスク開始時は main の最新を fetch してからブランチを作成する
 - タスク完了時はプルリクエストを作成するまでをタスクに含める
+- プルリクエストは日本語で作成する
 - GitHub API 利用時は .env の GITHUB_TOKEN を使用する
 
 ### 技術スタック
@@ -71,4 +73,4 @@ Follow-up TODOs: None
 
 すべてのPR/レビューはこの憲法への準拠を確認しなければならない。複雑性は正当化されなければならない。
 
-**Version**: 1.1.0 | **Ratified**: 2026-02-17 | **Last Amended**: 2026-02-20
+**Version**: 1.2.0 | **Ratified**: 2026-02-17 | **Last Amended**: 2026-02-28
