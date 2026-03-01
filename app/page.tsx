@@ -9,7 +9,7 @@ export default function TopPage() {
   const [isNavigating, setIsNavigating] = useState(false)
 
   const handleStartClick = () => {
-    if (isNavigating) return // Prevent duplicate navigation
+    if (isNavigating) return
     setIsNavigating(true)
     router.push('/quiz')
   }

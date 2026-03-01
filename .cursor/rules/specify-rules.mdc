@@ -9,6 +9,10 @@ Auto-generated from all feature plans. Last updated: 2026-02-17
 - DynamoDB（単一テーブルに `MahjongHand` アイテムを格納） (001-db-tehai)
 - TypeScript (Next.js 14), Node 20 + Next.js, React, AWS Amplify (Gen2), axios（バックエンドリクエスト用）, shadcn/ui（UI コンポーネント） (001-simple-frontend)
 - N/A（フロントエンドのみ。出題データは既存 AppSync/DynamoDB の MahjongHand から取得） (001-simple-frontend)
+- TypeScript 5.x（Next.js 14, Amplify Gen2） + Next.js, AWS Amplify (Gen2), AppSync, DynamoDB, React 18, Jes (006-10-questions-quiz)
+- DynamoDB（既存 MahjongHand）。クイズセッション・スコアは永続化せずフロントの状態のみ。 (006-10-questions-quiz)
+- TypeScript 5.x（Next.js 14, Amplify Gen2） + Next.js, AWS Amplify (Gen2), AppSync, DynamoDB, Lambda（TypeScript）, React 18, Jes (006-10-questions-quiz)
+- DynamoDB（既存 MahjongHand）。クイズセッション・スコアは永続化せずフロントの状態のみ。バックエンドに Lambda（TypeScript）を追加し、DynamoDB からランダム10件を返す。 (006-10-questions-quiz)
 
 - TypeScript (Next.js App Router準拠) + Next.js (App Router), shadcn/ui, Reac (001-top-page)
 
@@ -29,9 +33,9 @@ npm test && npm run lint
 TypeScript (Next.js App Router準拠): Follow standard conventions
 
 ## Recent Changes
+- 006-10-questions-quiz: Added TypeScript 5.x（Next.js 14, Amplify Gen2） + Next.js, AWS Amplify (Gen2), AppSync, DynamoDB, Lambda（TypeScript）, React 18, Jes
+- 006-10-questions-quiz: Added TypeScript 5.x（Next.js 14, Amplify Gen2） + Next.js, AWS Amplify (Gen2), AppSync, DynamoDB, React 18, Jes
 - 001-simple-frontend: Added TypeScript (Next.js 14), Node 20 + Next.js, React, AWS Amplify (Gen2), axios（バックエンドリクエスト用）, shadcn/ui（UI コンポーネント）
-- 001-db-tehai: Added TypeScript（AppSync Resolvers / Lambda, Next.js フロントと統一） + AWS Amplify Gen2, AWS AppSync, AWS Lambda, AWS SDK for JavaScript (v3)
-- 002-amplify-backend-setup: Added TypeScript 5.x（constitution および既存 frontend に合わせる） + AWS Amplify Gen2 (`amplify`), Next.js 14（既存 frontend）, Amazon Cognito（Amplify デフォルト認証）, DynamoDB（Amplify Data 経由）
 
 
 <!-- MANUAL ADDITIONS START -->
