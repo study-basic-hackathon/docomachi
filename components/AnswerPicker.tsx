@@ -6,6 +6,14 @@ import type { TileCode } from "@/src/lib/mahjong/mahjongHand";
 import { TileImage } from "@/components/TileImage";
 import { cn } from "@/lib/utils";
 
+/** 萬子・索子・筒子・字牌の順でグループ化（色ごとに改行するため） */
+const TILE_GROUPS: TileCode[][] = [
+  TILES_DISPLAY_ORDER.filter((c) => c.endsWith("m")),
+  TILES_DISPLAY_ORDER.filter((c) => c.endsWith("s")),
+  TILES_DISPLAY_ORDER.filter((c) => c.endsWith("p")),
+  TILES_DISPLAY_ORDER.filter((c) => !["m", "s", "p"].some((s) => String(c).endsWith(s))),
+];
+
 const TILE_LABELS: Record<TileCode, string> = {
   "1m": "1萬", "2m": "2萬", "3m": "3萬", "4m": "4萬", "5m": "5萬", "6m": "6萬", "7m": "7萬", "8m": "8萬", "9m": "9萬",
   "1p": "1筒", "2p": "2筒", "3p": "3筒", "4p": "4筒", "5p": "5筒", "6p": "6筒", "7p": "7筒", "8p": "8筒", "9p": "9筒",
@@ -50,24 +58,31 @@ export function AnswerPicker({
           選択中: {selectedLabels}
         </p>
       )}
-      <div className="flex flex-wrap gap-1">
-        {TILES_DISPLAY_ORDER.map((code) => (
-          <button
-            key={code}
-            type="button"
-            onClick={() => toggle(code)}
-            className={cn(
-              "rounded border-2 transition focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer",
-              set.has(code)
-                ? "border-green-600 bg-green-100"
-                : "border-gray-200 hover:border-gray-400"
-            )}
-            aria-pressed={set.has(code)}
+      <div className="max-h-64 overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white/90 p-2">
+        {TILE_GROUPS.map((group, groupIndex) => (
+          <div
+            key={groupIndex}
+            className={cn("flex flex-wrap gap-1", groupIndex > 0 && "mt-2")}
           >
-            <span className="pointer-events-none block">
-              <TileImage tileCode={code} size={tileSize} />
-            </span>
-          </button>
+            {group.map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => toggle(code)}
+                className={cn(
+                  "rounded border-2 transition focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer",
+                  set.has(code)
+                    ? "border-green-600 bg-green-100 ring-2 ring-green-500 ring-offset-1"
+                    : "border-gray-200 hover:border-gray-400"
+                )}
+                aria-pressed={set.has(code)}
+              >
+                <span className="pointer-events-none block">
+                  <TileImage tileCode={code} size={tileSize} />
+                </span>
+              </button>
+            ))}
+          </div>
         ))}
       </div>
     </div>

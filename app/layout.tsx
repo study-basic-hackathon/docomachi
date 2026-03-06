@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import { AmplifyProvider } from "@/components/AmplifyProvider";
+import { OrientationLock } from "@/components/OrientationLock";
 import "./app.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,8 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <AmplifyProvider>{children}</AmplifyProvider>
+      <body className={`${inter.className} min-h-screen flex flex-col items-center`}>
+        <AmplifyProvider>
+          <OrientationLock />
+          {children}
+          <Toaster richColors position="top-center" />
+        </AmplifyProvider>
       </body>
     </html>
   );
