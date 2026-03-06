@@ -5,8 +5,12 @@ import { listRandomMahjongHands } from "./functions/listRandomMahjongHands/resou
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 
-/** SSM パラメータ名（固定）。Lambda はこのパスを参照する。循環依存を避けるため Lambda からは参照しない。 */
-export const MAHJONG_HAND_TABLE_NAME_SSM = "/docomachi/mahjong-hand-table-name";
+/**
+ * SSM パラメータ名。ブランチごとに別パスにして、サンドボックスとパイプライン（main 等）の競合を防ぐ。
+ * パイプラインでは AWS_BRANCH（例: main）、サンドボックスでは未設定のため 'sandbox' を使用。
+ */
+const branch = process.env.AWS_BRANCH ?? "sandbox";
+export const MAHJONG_HAND_TABLE_NAME_SSM = `/docomachi/${branch}/mahjong-hand-table-name`;
 
 const backend = defineBackend({
   auth,
