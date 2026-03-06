@@ -108,7 +108,7 @@
 
 - [ ] T018 Run quickstart.md validation (manual check of all confirmation points)
 - [x] T019 [P] Add minimal Jest tests for frontend design (e.g. top page renders banner, quiz shows loading overlay) in scripts/__tests__ or app/__tests__ as per project convention
-- [ ] T020 Create pull request for branch 007-frontend-design (PR は日本語で作成)
+- [x] T020 Create pull request for branch 007-frontend-design (PR は日本語で作成)
 
 ---
 

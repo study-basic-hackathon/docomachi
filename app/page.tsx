@@ -17,27 +17,29 @@ export default function TopPage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full max-w-4xl flex-col items-center justify-center px-4">
-      <header className="mb-6 w-full flex-shrink-0">
+    <div className="h-screen w-screen overflow-hidden">
+      <main className="relative h-full w-full">
         <Image
           src="/top-banner.png"
           alt="トップバナー"
-          width={800}
-          height={200}
-          className="w-full rounded-lg object-contain"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
           priority
         />
-      </header>
-      <div className="flex flex-col items-center gap-4">
-        <Button
-          size="lg"
-          className="text-xl px-8 py-6 bg-white text-green-700 hover:bg-gray-100"
-          onClick={handleStartClick}
-          disabled={isNavigating}
-        >
-          スタート
-        </Button>
-      </div>
+        <div className="absolute inset-x-0 bottom-[10%] z-20 flex justify-center">
+          <div className="rounded-xl bg-black/25 p-1.5 backdrop-blur-sm">
+            <Button
+              size="lg"
+              className="border-0 text-xl px-8 py-6 bg-white text-gray-900 shadow-lg hover:bg-gray-100 focus-visible:ring-0 focus-visible:ring-offset-0"
+              onClick={handleStartClick}
+              disabled={isNavigating}
+            >
+              スタート
+            </Button>
+          </div>
+        </div>
+      </main>
       <LoadingOverlay active={isNavigating} text="クイズへ移動中..." />
     </div>
   );
