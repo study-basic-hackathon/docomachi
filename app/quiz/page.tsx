@@ -60,7 +60,7 @@ export default function QuizPage() {
 
   if (state === "loading") {
     return (
-      <div className="relative min-h-screen w-full max-w-2xl p-4">
+      <div className="relative mx-auto min-h-screen w-full max-w-5xl p-4">
         <div className="flex flex-col items-center justify-center py-20">
           <p className="text-lg text-white/90">読み込み中...</p>
         </div>
@@ -71,10 +71,10 @@ export default function QuizPage() {
 
   if (state === "error") {
     return (
-      <div className="flex min-h-screen w-full max-w-2xl flex-col items-center justify-center gap-4 p-4">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-4 p-4">
         <p className="text-center text-red-100">{errorMessage}</p>
         <div className="flex flex-wrap justify-center gap-2">
-          <Button onClick={load} className="bg-white text-green-800 hover:bg-gray-100">
+          <Button onClick={load} className="bg-white text-[#0f4f2f] hover:bg-gray-100">
             もう一度試す
           </Button>
           <Button variant="outline" asChild className="border-white text-white hover:bg-white/10">
@@ -88,12 +88,12 @@ export default function QuizPage() {
   if (state === "ready" && view === "result") {
     const correctCount = answers.filter((a) => a === "correct").length;
     return (
-      <div className="flex min-h-screen w-full max-w-2xl flex-col items-center justify-center gap-6 p-4">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-6 p-4">
         <h2 className="text-2xl font-bold text-white">結果</h2>
         <p className="text-4xl font-semibold text-green-200">
           {correctCount} / 10
         </p>
-        <Button asChild className="bg-white text-green-800 hover:bg-gray-100">
+        <Button asChild className="bg-white text-[#0f4f2f] hover:bg-gray-100">
           <Link href="/">トップへ戻る</Link>
         </Button>
       </div>
@@ -103,7 +103,7 @@ export default function QuizPage() {
   const question = questions[currentIndex];
   if (state === "ready" && question) {
     return (
-      <div className="flex min-h-screen w-full max-w-2xl flex-col gap-6 p-4">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-6 p-4">
         <div className="flex items-center justify-between">
           <Button variant="outline" size="sm" asChild className="border-white text-white hover:bg-white/10">
             <Link href="/">戻る</Link>
@@ -113,13 +113,13 @@ export default function QuizPage() {
           </span>
         </div>
 
-        <section className="rounded-lg bg-white/95 p-4">
-          <h2 className="mb-2 text-lg font-semibold text-gray-800">手牌</h2>
+        <section className="rounded-lg border border-[#0f4f2f] bg-[#2f7d4b] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+          <h2 className="mb-2 text-lg font-semibold text-emerald-50">手牌</h2>
           <HandDisplay tiles={question.tiles} />
         </section>
 
-        <section className="rounded-lg bg-white/95 p-4">
-          <h2 className="mb-2 text-lg font-semibold text-gray-800">
+        <section className="rounded-lg border border-[#0f4f2f] bg-[#2f7d4b] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+          <h2 className="mb-2 text-lg font-semibold text-emerald-50">
             待ち牌を選んでください（複数選択可）
           </h2>
           <AnswerPicker
@@ -132,7 +132,7 @@ export default function QuizPage() {
           <Button
             size="lg"
             disabled={selectedTiles.length < 1}
-            className="w-full bg-white text-green-800 hover:bg-gray-100"
+            className="w-full bg-white text-[#0f4f2f] hover:bg-gray-100"
             onClick={() => {
               if (!question) return;
               const correct = isCorrectAnswer(

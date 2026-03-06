@@ -53,12 +53,16 @@ export function AnswerPicker({
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      {selectedTiles.length > 0 && (
-        <p className="text-sm text-gray-700">
-          選択中: {selectedLabels}
-        </p>
-      )}
-      <div className="max-h-64 overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white/90 p-2">
+      <p
+        className={cn(
+          "min-h-5 text-sm text-emerald-50",
+          selectedTiles.length === 0 && "opacity-0"
+        )}
+        aria-live="polite"
+      >
+        {selectedTiles.length > 0 ? `選択中: ${selectedLabels}` : "選択中: "}
+      </p>
+      <div className="rounded border border-[#0f4f2f] bg-[#3a8a57]/80 p-2">
         {TILE_GROUPS.map((group, groupIndex) => (
           <div
             key={groupIndex}

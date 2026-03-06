@@ -31,7 +31,7 @@ export default function TopPage() {
           <div className="rounded-xl bg-black/25 p-1.5 backdrop-blur-sm">
             <Button
               size="lg"
-              className="border-0 text-xl px-8 py-6 bg-white text-gray-900 shadow-lg hover:bg-gray-100 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="border-0 text-xl px-8 py-6 bg-white text-[#0f4f2f] shadow-lg hover:bg-gray-100 focus-visible:ring-0 focus-visible:ring-offset-0"
               onClick={handleStartClick}
               disabled={isNavigating}
             >
