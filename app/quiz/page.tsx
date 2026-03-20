@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { fetchQuestions, type QuestionItem } from "@/src/lib/api/fetchQuestions";
@@ -13,6 +13,13 @@ import { LoadingOverlay } from "@/components/ui/LoadingOverlay";
 
 type QuizState = "loading" | "error" | "ready";
 type AnswerState = "correct" | "incorrect";
+type ResolutionReason = "manual" | "timeout";
+
+const QUIZ_TIME_LIMIT_SECONDS = 15;
+
+function calcRemainingSeconds(deadlineMs: number, nowMs: number): number {
+  return Math.max(0, Math.ceil((deadlineMs - nowMs) / 1000));
+}
 
 function isCorrectAnswer(selected: TileCode[], winning: TileCode[]): boolean {
   const a = new Set(selected);
@@ -34,6 +41,54 @@ export default function QuizPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalCorrect, setModalCorrect] = useState(false);
   const [view, setView] = useState<"quiz" | "result">("quiz");
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+  const [deadlineAt, setDeadlineAt] = useState<number | null>(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(QUIZ_TIME_LIMIT_SECONDS);
+  const [resolved, setResolved] = useState(false);
+  const [running, setRunning] = useState(true);
+  const resolvedRef = useRef(false);
+  const runningRef = useRef(true);
+  const deadlineAtRef = useRef<number | null>(null);
+
+  const syncResolutionState = (next: boolean) => {
+    resolvedRef.current = next;
+    setResolved(next);
+  };
+
+  const syncRunningState = (next: boolean) => {
+    runningRef.current = next;
+    setRunning(next);
+  };
+
+  const initQuestionTimer = () => {
+    const now = Date.now();
+    const deadline = now + QUIZ_TIME_LIMIT_SECONDS * 1000;
+    setStartedAt(now);
+    setDeadlineAt(deadline);
+    deadlineAtRef.current = deadline;
+    setRemainingSeconds(QUIZ_TIME_LIMIT_SECONDS);
+    syncRunningState(true);
+    syncResolutionState(false);
+  };
+
+  const resolveCurrentQuestion = (
+    currentQuestionIndex: number,
+    answerState: AnswerState,
+    _reason: ResolutionReason
+  ) => {
+    if (resolvedRef.current) return;
+    syncRunningState(false);
+    syncResolutionState(true);
+    setAnswers((prev) => {
+      const next = [...prev];
+      if (next[currentQuestionIndex] === null) {
+        next[currentQuestionIndex] = answerState;
+      }
+      return next;
+    });
+    setModalCorrect(answerState === "correct");
+    setModalOpen(true);
+  };
 
   const load = async () => {
     setState("loading");
@@ -45,6 +100,7 @@ export default function QuizPage() {
       setAnswers(Array(10).fill(null) as (AnswerState | null)[]);
       setSelectedTiles([]);
       setView("quiz");
+      initQuestionTimer();
       setState("ready");
     } catch (e) {
       setState("error");
@@ -57,6 +113,22 @@ export default function QuizPage() {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    if (state !== "ready" || view !== "quiz" || !questions[currentIndex]) return;
+    initQuestionTimer();
+    const timerId = window.setInterval(() => {
+      if (!runningRef.current) return;
+      const currentDeadline = deadlineAtRef.current;
+      if (!currentDeadline) return;
+      const nextRemaining = calcRemainingSeconds(currentDeadline, Date.now());
+      setRemainingSeconds(nextRemaining);
+      if (nextRemaining <= 0 && !resolvedRef.current) {
+        resolveCurrentQuestion(currentIndex, "incorrect", "timeout");
+      }
+    }, 1000);
+    return () => window.clearInterval(timerId);
+  }, [state, view, currentIndex, questions]);
 
   if (state === "loading") {
     return (
@@ -108,9 +180,19 @@ export default function QuizPage() {
           <Button variant="outline" size="sm" asChild className="border-white text-white hover:bg-white/10">
             <Link href="/">戻る</Link>
           </Button>
-          <span className="text-sm text-white/80">
-            {currentIndex + 1} / {questions.length}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-white/80">
+              {currentIndex + 1} / {questions.length}
+            </span>
+            <span
+              data-testid="countdown-timer"
+              className={`text-sm font-semibold ${
+                remainingSeconds <= 3 ? "text-red-300" : "text-emerald-100"
+              }`}
+            >
+              残り時間: {remainingSeconds}秒
+            </span>
+          </div>
         </div>
 
         <section className="rounded-lg border border-[#0f4f2f] bg-[#2f7d4b] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
@@ -135,19 +217,15 @@ export default function QuizPage() {
             className="w-full bg-white text-[#0f4f2f] hover:bg-gray-100"
             onClick={() => {
               if (!question) return;
-              const correct = isCorrectAnswer(
-                selectedTiles,
-                question.winningTiles
-              );
-              setAnswers((prev) => {
-                const next = [...prev];
-                if (next[currentIndex] === null) {
-                  next[currentIndex] = correct ? "correct" : "incorrect";
-                }
-                return next;
-              });
-              setModalCorrect(correct);
-              setModalOpen(true);
+              if (resolvedRef.current) return;
+              syncRunningState(false);
+              const currentDeadline = deadlineAtRef.current ?? deadlineAt;
+              if (currentDeadline && Date.now() >= currentDeadline) {
+                resolveCurrentQuestion(currentIndex, "incorrect", "timeout");
+                return;
+              }
+              const correct = isCorrectAnswer(selectedTiles, question.winningTiles);
+              resolveCurrentQuestion(currentIndex, correct ? "correct" : "incorrect", "manual");
             }}
           >
             解答する
@@ -171,6 +249,9 @@ export default function QuizPage() {
           onClose={() => {
             setModalOpen(false);
             setSelectedTiles([]);
+            if (startedAt) {
+              initQuestionTimer();
+            }
           }}
         />
       </div>

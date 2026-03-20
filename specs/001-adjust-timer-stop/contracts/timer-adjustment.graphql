@@ -1,0 +1,44 @@
+# Timer Adjustment Contract (GraphQL)
+
+```graphql
+enum ResolutionReason {
+  MANUAL_SUBMIT
+  TIMEOUT
+}
+
+enum AnswerState {
+  CORRECT
+  INCORRECT
+}
+
+type TimerState {
+  questionId: ID!
+  durationSeconds: Int!
+  remainingSeconds: Int!
+  running: Boolean!
+}
+
+type ResolutionResult {
+  questionId: ID!
+  reason: ResolutionReason!
+  answerState: AnswerState!
+  showIncorrectModal: Boolean!
+}
+
+input SubmitAnswerInput {
+  questionId: ID!
+  selectedTiles: [String!]!
+  submittedAt: AWSDateTime!
+}
+
+type Mutation {
+  submitAnswerAndStopTimer(input: SubmitAnswerInput!): ResolutionResult!
+}
+```
+
+## Contract Rules
+
+- `submitAnswerAndStopTimer` 実行時に `TimerState.running` は `false` へ遷移する。
+- `submittedAt` が締切時刻以上の場合は `reason=TIMEOUT` として扱う。
+- `reason=TIMEOUT` のとき `answerState=INCORRECT` と `showIncorrectModal=true` を返す。
+- 同一 `questionId` で複数回確定させない。
