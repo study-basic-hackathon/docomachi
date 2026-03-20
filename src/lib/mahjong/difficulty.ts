@@ -26,7 +26,7 @@ function isKokushi(tiles: TileCode[]): boolean {
   if (tiles.length !== 13) return false;
   const set = new Set(tiles);
   if (set.size !== 13) return false;
-  return [...set].every((t) => TERMINALS_AND_HONORS.has(t));
+  return Array.from(set).every((t) => TERMINALS_AND_HONORS.has(t));
 }
 
 function isJunseiChuren(tiles: TileCode[]): boolean {

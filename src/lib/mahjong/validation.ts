@@ -60,7 +60,7 @@ export function validateMahjongHand(hand: HandLike): ValidationIssue[] {
 
   const combined = [...hand.tiles, ...hand.winningTiles];
   const counts = countTiles(combined as TileCode[]);
-  for (const [code, count] of counts) {
+  for (const [code, count] of Array.from(counts.entries())) {
     if (count > 4) {
       issues.push({
         kind: "tileCountExceeded",
