@@ -30,7 +30,8 @@
       "haku",
       "hatsu",
       "chun"
-    ]
+    ],
+    "difficulty": "high"
   },
   {
     "id": "junsei-churen",
@@ -49,7 +50,18 @@
       "9m",
       "9m"
     ],
-    "winningTiles": ["1m", "2m", "3m", "4m", "5m", "6m", "7m", "8m", "9m"]
+    "winningTiles": [
+      "1m",
+      "2m",
+      "3m",
+      "4m",
+      "5m",
+      "6m",
+      "7m",
+      "8m",
+      "9m"
+    ],
+    "difficulty": "high"
   },
   {
     "id": "ryanmen",
@@ -68,7 +80,11 @@
       "6s",
       "6s"
     ],
-    "winningTiles": ["1m", "4m"]
+    "winningTiles": [
+      "1m",
+      "4m"
+    ],
+    "difficulty": "middle"
   },
   {
     "id": "shabo-1",
@@ -87,7 +103,11 @@
       "6s",
       "6s"
     ],
-    "winningTiles": ["2m", "3m"]
+    "winningTiles": [
+      "2m",
+      "3m"
+    ],
+    "difficulty": "middle"
   },
   {
     "id": "sanmenchan",
@@ -106,7 +126,12 @@
       "5m",
       "5m"
     ],
-    "winningTiles": ["2m", "5m", "8m"]
+    "winningTiles": [
+      "2m",
+      "5m",
+      "8m"
+    ],
+    "difficulty": "middle"
   },
   {
     "id": "shabo-2",
@@ -125,7 +150,11 @@
       "8s",
       "9s"
     ],
-    "winningTiles": ["2p", "3p"]
+    "winningTiles": [
+      "2p",
+      "3p"
+    ],
+    "difficulty": "middle"
   },
   {
     "id": "tanki",
@@ -144,7 +173,10 @@
       "9p",
       "5s"
     ],
-    "winningTiles": ["5s"]
+    "winningTiles": [
+      "5s"
+    ],
+    "difficulty": "high"
   },
   {
     "id": "chiitoitsu-tanki",
@@ -163,7 +195,10 @@
       "6s",
       "7s"
     ],
-    "winningTiles": ["7s"]
+    "winningTiles": [
+      "7s"
+    ],
+    "difficulty": "high"
   },
   {
     "id": "kanchan",
@@ -182,7 +217,10 @@
       "1m",
       "1m"
     ],
-    "winningTiles": ["5m"]
+    "winningTiles": [
+      "5m"
+    ],
+    "difficulty": "high"
   },
   {
     "id": "penchan",
@@ -201,6 +239,260 @@
       "1p",
       "1p"
     ],
-    "winningTiles": ["3m"]
+    "winningTiles": [
+      "3m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "chinitsu-1",
+    "tiles": [
+      "1m",
+      "1m",
+      "1m",
+      "2m",
+      "3m",
+      "4m",
+      "4m",
+      "4m",
+      "5m",
+      "6m",
+      "7m",
+      "8m",
+      "9m"
+    ],
+    "winningTiles": [
+      "1m",
+      "4m",
+      "7m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "chinitsu-2",
+    "tiles": [
+      "2m",
+      "2m",
+      "3m",
+      "3m",
+      "4m",
+      "4m",
+      "5m",
+      "5m",
+      "6m",
+      "6m",
+      "7m",
+      "8m",
+      "9m"
+    ],
+    "winningTiles": [
+      "2m",
+      "3m",
+      "5m",
+      "6m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "chinitsu-3",
+    "tiles": [
+      "1m",
+      "1m",
+      "1m",
+      "2m",
+      "3m",
+      "4m",
+      "5m",
+      "6m",
+      "6m",
+      "7m",
+      "8m",
+      "9m",
+      "9m"
+    ],
+    "winningTiles": [
+      "1m",
+      "4m",
+      "7m",
+      "9m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "chinitsu-4",
+    "tiles": [
+      "1m",
+      "1m",
+      "1m",
+      "2m",
+      "2m",
+      "2m",
+      "3m",
+      "3m",
+      "3m",
+      "4m",
+      "4m",
+      "4m",
+      "5m"
+    ],
+    "winningTiles": [
+      "2m",
+      "3m",
+      "4m",
+      "5m",
+      "6m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "chinitsu-5",
+    "tiles": [
+      "1m",
+      "2m",
+      "3m",
+      "4m",
+      "5m",
+      "5m",
+      "5m",
+      "6m",
+      "7m",
+      "8m",
+      "9m",
+      "9m",
+      "9m"
+    ],
+    "winningTiles": [
+      "1m",
+      "3m",
+      "4m",
+      "5m",
+      "6m",
+      "9m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "henso-1",
+    "tiles": [
+      "1m",
+      "1m",
+      "1m",
+      "2m",
+      "3m",
+      "1p",
+      "2p",
+      "3p",
+      "4p",
+      "4p",
+      "1s",
+      "2s",
+      "3s"
+    ],
+    "winningTiles": [
+      "1m",
+      "4m",
+      "4p"
+    ],
+    "difficulty": "middle"
+  },
+  {
+    "id": "henso-2",
+    "tiles": [
+      "1s",
+      "1s",
+      "1s",
+      "2s",
+      "3s",
+      "4s",
+      "5s",
+      "2m",
+      "3m",
+      "4m",
+      "5p",
+      "5p",
+      "5p"
+    ],
+    "winningTiles": [
+      "2s",
+      "3s",
+      "5s",
+      "6s"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "henso-3",
+    "tiles": [
+      "2s",
+      "3s",
+      "4s",
+      "5s",
+      "6s",
+      "7s",
+      "8s",
+      "1m",
+      "2m",
+      "3m",
+      "1p",
+      "1p",
+      "1p"
+    ],
+    "winningTiles": [
+      "2s",
+      "5s",
+      "8s"
+    ],
+    "difficulty": "middle"
+  },
+  {
+    "id": "henso-4",
+    "tiles": [
+      "4m",
+      "4m",
+      "4m",
+      "5m",
+      "6m",
+      "7m",
+      "8m",
+      "1p",
+      "2p",
+      "3p",
+      "1s",
+      "1s",
+      "1s"
+    ],
+    "winningTiles": [
+      "3m",
+      "5m",
+      "6m",
+      "8m",
+      "9m"
+    ],
+    "difficulty": "high"
+  },
+  {
+    "id": "henso-5",
+    "tiles": [
+      "1m",
+      "1m",
+      "1m",
+      "2m",
+      "3m",
+      "1p",
+      "1p",
+      "1p",
+      "2p",
+      "3p",
+      "4s",
+      "5s",
+      "6s"
+    ],
+    "winningTiles": [
+      "1m",
+      "4m",
+      "1p",
+      "4p"
+    ],
+    "difficulty": "high"
   }
 ]

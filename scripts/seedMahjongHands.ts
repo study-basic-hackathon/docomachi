@@ -66,6 +66,8 @@ type SeedHand = {
   id?: string;
   tiles: string[];
   winningTiles: string[];
+  /** Present in JSON; not sent to DynamoDB unless schema has difficulty. */
+  difficulty?: string;
 };
 
 const ALLOWED_TILE_CODES: TileCode[] = [
