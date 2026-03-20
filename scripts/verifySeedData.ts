@@ -34,8 +34,7 @@ function main(): void {
   for (const { id, issues } of failures) {
     console.log(`- ID=${id}`);
     for (const issue of issues) {
-      const msg = "message" in issue ? issue.message : `${issue.kind}: ${JSON.stringify(issue)}`;
-      console.log(`  - [${issue.kind}] ${msg}`);
+      console.log(`  - [${issue.kind}] ${issue.message}`);
     }
   }
   if (failures.length > 0) process.exitCode = 1;
