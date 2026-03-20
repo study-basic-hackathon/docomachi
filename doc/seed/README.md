@@ -2,6 +2,18 @@
 
 `doc/seed/mahjong_hands.json` の内容を DynamoDB（MahjongHand）に投入する手順です。
 
+## データ形式
+
+各問題は `id`（推奨）, `tiles`（13枚）, `winningTiles`, `difficulty`（`low` | `middle` | `high`）を持ちます。同一牌は4枚までです。`difficulty` はシード JSON に含めますが、現行の DynamoDB スキーマには投入しません（アプリで難易度を使う場合にスキーマ拡張を検討）。
+
+## 検証
+
+投入前にルール適合（手牌13枚・同一牌4枚まで・牌コード妥当）を確認する場合:
+
+```bash
+npx tsx scripts/verifySeedData.ts
+```
+
 ## サンドボックス環境
 
 1. サンドボックスを起動し、`amplify_outputs.json` が生成されていることを確認する。

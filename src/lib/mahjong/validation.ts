@@ -14,9 +14,21 @@ function isValidTileCode(value: string): value is TileCode {
 export type ValidationIssue =
   | { kind: "tilesLength"; message: string }
   | { kind: "tilesInvalidCode"; code: string; message: string }
-  | { kind: "winningTilesInvalidCode"; code: string; message: string };
+  | { kind: "winningTilesInvalidCode"; code: string; message: string }
+  | { kind: "tileCountExceeded"; code: string; count: number; message: string };
 
-export function validateMahjongHand(hand: MahjongHand): ValidationIssue[] {
+/** Hand-like object with at least tiles and winningTiles (e.g. seed JSON or MahjongHand). */
+export type HandLike = { tiles: TileCode[]; winningTiles: TileCode[] };
+
+function countTiles(tiles: TileCode[]): Map<string, number> {
+  const map = new Map<string, number>();
+  for (const t of tiles) {
+    map.set(t, (map.get(t) ?? 0) + 1);
+  }
+  return map;
+}
+
+export function validateMahjongHand(hand: HandLike): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
   if (hand.tiles.length !== 13) {
@@ -42,6 +54,19 @@ export function validateMahjongHand(hand: MahjongHand): ValidationIssue[] {
         kind: "winningTilesInvalidCode",
         code: t,
         message: `invalid tile code in winningTiles: ${t}`,
+      });
+    }
+  }
+
+  const combined = [...hand.tiles, ...hand.winningTiles];
+  const counts = countTiles(combined as TileCode[]);
+  for (const [code, count] of counts) {
+    if (count > 4) {
+      issues.push({
+        kind: "tileCountExceeded",
+        code,
+        count,
+        message: `tile ${code} appears ${count} times (max 4 including winningTiles)`,
       });
     }
   }

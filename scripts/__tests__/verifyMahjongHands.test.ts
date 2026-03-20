@@ -27,8 +27,8 @@ describe("verifyMahjongHands", () => {
     const hands: MahjongHand[] = [
       {
         id: "1",
-        tiles: Array(13).fill("1m"),
-        winningTiles: ["9m"],
+        tiles: ["1m", "2m", "3m", "4m", "5m", "6m", "7m", "8m", "9m", "1p", "2p", "3p", "4p"],
+        winningTiles: ["5p"],
         createdAt: "2024-01-01T00:00:00.000Z",
         updatedAt: "2024-01-01T00:00:00.000Z",
       },
