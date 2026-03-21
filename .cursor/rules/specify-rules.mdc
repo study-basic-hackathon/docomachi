@@ -17,6 +17,14 @@ Auto-generated from all feature plans. Last updated: 2026-02-17
 - N/A（本機能は表示層のみ） (007-frontend-design)
 - TypeScript (Node), 既存リポジトリの tsconfig に準拠 + 既存（Amplify, fs/path 等）。新規追加は最小限（必要なら JSON Schema 検証ライブラリ） (001-seed-data)
 - `doc/seed/mahjong_hands.json`（ファイル）。seed 実行時に既存の Amplify Data 経由で DynamoDB に投入 (001-seed-data)
+- TypeScript (Next.js App Router), React client componen + Next.js, React, Amplify Data client, Sonner, shadcn/ui components (001-answer-timer)
+- N/A（本機能では永続データ追加なし） (001-answer-timer)
+- TypeScript (Next.js App Router), React client componen + Next.js, React, Sonner, existing quiz UI components (001-adjust-timer-stop)
+- N/A（本機能で永続化変更なし） (001-adjust-timer-stop)
+- TypeScript (Next.js runtime), React Server/Client Components + Next.js, React, Tailwind CSS, Amplify-generated client artifacts (001-ui-visibility-timer)
+- N/A (本機能は表示レイヤー変更のみ) (001-ui-visibility-timer)
+- Markdown（README）／日本語本文。リポジトリのアプリは TypeScript 5.6+、Next.js 14（App Router）。 (001-project-readme)
+- Git 管理ファイル（ルート `README.md`、画像は `doc/readme/screenshots/` 推奨）。永続化 DB は本機能の成果物ではない。 (001-project-readme)
 
 - TypeScript (Next.js App Router準拠) + Next.js (App Router), shadcn/ui, Reac (001-top-page)
 
@@ -37,9 +45,9 @@ npm test && npm run lint
 TypeScript (Next.js App Router準拠): Follow standard conventions
 
 ## Recent Changes
-- 001-seed-data: Added TypeScript (Node), 既存リポジトリの tsconfig に準拠 + 既存（Amplify, fs/path 等）。新規追加は最小限（必要なら JSON Schema 検証ライブラリ）
-- 007-frontend-design: Added TypeScript 5.x, Node 20+ + Next.js 14, React 18, Tailwind CSS 4, shadcn/ui（Radix UI + CVA + tailwind-merge 等）、AWS Amplify Gen2
-- 006-10-questions-quiz: Added TypeScript 5.x（Next.js 14, Amplify Gen2） + Next.js, AWS Amplify (Gen2), AppSync, DynamoDB, Lambda（TypeScript）, React 18, Jes
+- 001-project-readme: Added Markdown（README）／日本語本文。リポジトリのアプリは TypeScript 5.6+、Next.js 14（App Router）。
+- 001-ui-visibility-timer: Added TypeScript (Next.js runtime), React Server/Client Components + Next.js, React, Tailwind CSS, Amplify-generated client artifacts
+- 001-adjust-timer-stop: Added TypeScript (Next.js App Router), React client componen + Next.js, React, Sonner, existing quiz UI components
 
 
 <!-- MANUAL ADDITIONS START -->
