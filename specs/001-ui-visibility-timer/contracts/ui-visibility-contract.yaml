@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  title: UI Visibility Verification Contract
+  version: 1.0.0
+  description: >
+    This contract defines acceptance verification endpoints for the UI visibility update.
+    It does not introduce production API behavior changes.
+paths:
+  /ui-verification/visibility:
+    post:
+      summary: Verify text visibility conformance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - screenId
+                - essentialNormalContrast
+                - essentialLargeContrast
+              properties:
+                screenId:
+                  type: string
+                essentialNormalContrast:
+                  type: number
+                  minimum: 0
+                essentialLargeContrast:
+                  type: number
+                  minimum: 0
+      responses:
+        "200":
+          description: Visibility check result
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pass
+                properties:
+                  pass:
+                    type: boolean
+                  violations:
+                    type: array
+                    items:
+                      type: string
+  /ui-verification/timer:
+    post:
+      summary: Verify timer placement and size conformance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - screenId
+                - placement
+                - timerSize
+              properties:
+                screenId:
+                  type: string
+                placement:
+                  type: string
+                  enum:
+                    - above-answer-button
+                timerSize:
+                  type: number
+                  minimum: 0
+      responses:
+        "200":
+          description: Timer verification result
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pass
+                properties:
+                  pass:
+                    type: boolean
+                  violations:
+                    type: array
+                    items:
+                      type: string
