@@ -30,12 +30,14 @@ jest.mock("@/components/ui/button", () => ({
     children,
     onClick,
     disabled,
+    className,
   }: {
     children: ReactNode;
     onClick?: () => void;
     disabled?: boolean;
+    className?: string;
   }) => (
-    <button type="button" onClick={onClick} disabled={disabled}>
+    <button type="button" onClick={onClick} disabled={disabled} className={className}>
       {children}
     </button>
   ),
@@ -47,9 +49,11 @@ jest.mock("@/components/AnswerPicker", () => ({
   }: {
     onChange: (tiles: string[]) => void;
   }) => (
-    <button type="button" onClick={() => onChange(["m1"])}>
-      選択
-    </button>
+    <div data-testid="answer-picker">
+      <button type="button" onClick={() => onChange(["m1"])}>
+        選択
+      </button>
+    </div>
   ),
 }));
 
@@ -117,7 +121,7 @@ describe("QuizPage timer behavior", () => {
     });
 
     await waitFor(() => expect(timer).toHaveTextContent("残り時間: 3秒"));
-    expect(timer.className).toContain("text-red-300");
+    expect(timer.className).toContain("text-red-700");
   });
 
   it("解答ボタン押下後はタイマー表示が停止する", async () => {
@@ -151,5 +155,19 @@ describe("QuizPage timer behavior", () => {
     fireEvent.click(screen.getByText("解答する"));
 
     expect(screen.getAllByText("modal-incorrect")).toHaveLength(1);
+  });
+
+  it("タイマーを解答ボタン直上に表示する", async () => {
+    render(<QuizPage />);
+
+    const timer = await screen.findByTestId("countdown-timer");
+    const answerButton = await screen.findByText("解答する");
+    expect(timer.compareDocumentPosition(answerButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it("タイマー表示サイズが最小24相当のクラスを持つ", async () => {
+    render(<QuizPage />);
+    const timer = await screen.findByTestId("countdown-timer");
+    expect(timer.className).toContain("text-2xl");
   });
 });

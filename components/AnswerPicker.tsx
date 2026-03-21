@@ -26,6 +26,8 @@ interface AnswerPickerProps {
   onChange: (selected: TileCode[]) => void;
   tileSize?: number;
   className?: string;
+  selectedLabelClassName?: string;
+  panelClassName?: string;
 }
 
 export function AnswerPicker({
@@ -33,6 +35,8 @@ export function AnswerPicker({
   onChange,
   tileSize = 40,
   className = "",
+  selectedLabelClassName = "text-emerald-900",
+  panelClassName = "bg-emerald-50",
 }: AnswerPickerProps) {
   const latestSelectedRef = useRef<TileCode[]>(selectedTiles);
   latestSelectedRef.current = selectedTiles;
@@ -55,14 +59,15 @@ export function AnswerPicker({
     <div className={cn("flex flex-col gap-2", className)}>
       <p
         className={cn(
-          "min-h-5 text-sm text-emerald-50",
+          "min-h-5 text-sm",
+          selectedLabelClassName,
           selectedTiles.length === 0 && "opacity-0"
         )}
         aria-live="polite"
       >
         {selectedTiles.length > 0 ? `選択中: ${selectedLabels}` : "選択中: "}
       </p>
-      <div className="rounded border border-[#0f4f2f] bg-[#3a8a57]/80 p-2">
+      <div className={cn("rounded border border-emerald-700 p-2", panelClassName)}>
         {TILE_GROUPS.map((group, groupIndex) => (
           <div
             key={groupIndex}

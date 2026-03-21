@@ -132,9 +132,9 @@ export default function QuizPage() {
 
   if (state === "loading") {
     return (
-      <div className="relative mx-auto min-h-screen w-full max-w-5xl p-4">
+      <div className="relative mx-auto min-h-screen w-full max-w-5xl bg-white p-4">
         <div className="flex flex-col items-center justify-center py-20">
-          <p className="text-lg text-white/90">読み込み中...</p>
+          <p className="text-lg text-emerald-900">読み込み中...</p>
         </div>
         <LoadingOverlay active text="問題を読み込み中..." />
       </div>
@@ -143,13 +143,13 @@ export default function QuizPage() {
 
   if (state === "error") {
     return (
-      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-4 p-4">
-        <p className="text-center text-red-100">{errorMessage}</p>
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-4 bg-white p-4">
+        <p className="text-center text-red-700">{errorMessage}</p>
         <div className="flex flex-wrap justify-center gap-2">
-          <Button onClick={load} className="bg-white text-[#0f4f2f] hover:bg-gray-100">
+          <Button onClick={load} className="bg-emerald-700 text-white hover:bg-emerald-800">
             もう一度試す
           </Button>
-          <Button variant="outline" asChild className="border-white text-white hover:bg-white/10">
+          <Button variant="outline" asChild className="border-emerald-700 text-emerald-900 hover:bg-emerald-50">
             <Link href="/">トップへ戻る</Link>
           </Button>
         </div>
@@ -160,12 +160,12 @@ export default function QuizPage() {
   if (state === "ready" && view === "result") {
     const correctCount = answers.filter((a) => a === "correct").length;
     return (
-      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-6 p-4">
-        <h2 className="text-2xl font-bold text-white">結果</h2>
-        <p className="text-4xl font-semibold text-green-200">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-6 bg-white p-4">
+        <h2 className="text-2xl font-bold text-emerald-900">結果</h2>
+        <p className="text-4xl font-semibold text-emerald-700">
           {correctCount} / 10
         </p>
-        <Button asChild className="bg-white text-[#0f4f2f] hover:bg-gray-100">
+        <Button asChild className="bg-emerald-700 text-white hover:bg-emerald-800">
           <Link href="/">トップへ戻る</Link>
         </Button>
       </div>
@@ -175,46 +175,50 @@ export default function QuizPage() {
   const question = questions[currentIndex];
   if (state === "ready" && question) {
     return (
-      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-6 p-4">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-6 bg-white p-4">
         <div className="flex items-center justify-between">
-          <Button variant="outline" size="sm" asChild className="border-white text-white hover:bg-white/10">
+          <Button variant="outline" size="sm" asChild className="border-emerald-700 text-emerald-900 hover:bg-emerald-50">
             <Link href="/">戻る</Link>
           </Button>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-white/80">
+          <div className="flex items-center gap-3 text-emerald-900">
+            <span className="text-sm">
               {currentIndex + 1} / {questions.length}
-            </span>
-            <span
-              data-testid="countdown-timer"
-              className={`text-sm font-semibold ${
-                remainingSeconds <= 3 ? "text-red-300" : "text-emerald-100"
-              }`}
-            >
-              残り時間: {remainingSeconds}秒
             </span>
           </div>
         </div>
 
-        <section className="rounded-lg border border-[#0f4f2f] bg-[#2f7d4b] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-          <h2 className="mb-2 text-lg font-semibold text-emerald-50">手牌</h2>
+        <section className="rounded-lg border border-emerald-700 bg-emerald-50 p-5">
+          <h2 className="mb-2 text-lg font-semibold text-emerald-900">手牌</h2>
           <HandDisplay tiles={question.tiles} />
         </section>
 
-        <section className="rounded-lg border border-[#0f4f2f] bg-[#2f7d4b] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-          <h2 className="mb-2 text-lg font-semibold text-emerald-50">
+        <section className="rounded-lg border border-emerald-700 bg-emerald-50 p-5">
+          <h2 className="mb-2 text-lg font-semibold text-emerald-900">
             待ち牌を選んでください（複数選択可）
           </h2>
           <AnswerPicker
             selectedTiles={selectedTiles}
             onChange={setSelectedTiles}
+            selectedLabelClassName="text-emerald-900"
+            panelClassName="bg-white"
           />
         </section>
 
         <div className="mt-2">
+          <div className="mb-3 flex justify-center">
+            <span
+              data-testid="countdown-timer"
+              className={`text-2xl font-bold ${
+                remainingSeconds <= 3 ? "text-red-700" : "text-emerald-900"
+              }`}
+            >
+              残り時間: {remainingSeconds}秒
+            </span>
+          </div>
           <Button
             size="lg"
             disabled={selectedTiles.length < 1}
-            className="w-full bg-white text-[#0f4f2f] hover:bg-gray-100"
+            className="w-full bg-emerald-700 text-white hover:bg-emerald-800"
             onClick={() => {
               if (!question) return;
               if (resolvedRef.current) return;
